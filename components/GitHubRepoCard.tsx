@@ -1,18 +1,22 @@
 
-import {ChevronDown, Circle, Plus, Star} from "lucide-react";
+import {Circle, Star} from "lucide-react";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {ReactNode} from "react";
 import {Button} from "@/components/ui/button";
-import {Separator} from "@/components/ui/separator";
-import {
-    DropdownMenu, DropdownMenuCheckboxItem,
-    DropdownMenuContent, DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 
+interface Project {
+    name: string;
+    description: string;
+    html_url: string;
+    homepage: string;
+    languages_url: string;
+    languages: {
+        [key: string]: number;
+    },
+    updated_at: string;
+    stargazers_count: number;
+}
 
 function CardDescription(props: { children: ReactNode }) {
     return (
@@ -22,26 +26,62 @@ function CardDescription(props: { children: ReactNode }) {
     );
 }
 
-export function GitHubRepoCard({title, description, stars,  updatedAt, link, ...props} : {
-    title: string,
-    description: string,
-    stars: number,
-    updatedAt: string,
-    link: string,
-    [key: string]: any
+
+function LanguageBadges(project: Project) {
+
+
+    const LANGUAGES_COLORS = {
+        "TypeScript": "fill-sky-400 text-sky-400",
+        "JavaScript": "fill-yellow-400 text-yellow-400",
+        "Python": "fill-green-400 text-green-400",
+        "Unknown": "fill-gray-400 text-gray-400",
+    } as Record<string, string>;
+
+    const all = Object.entries(project.languages)
+
+
+    let highestLanguage: string | null = null;
+    let highestLines = 0;
+
+    for (const language in project.languages) {
+        const lines = project.languages[language];
+        if (lines > highestLines) {
+            highestLines = lines;
+            highestLanguage = language;
+        }
+    }
+
+
+    const mostUsed = {
+        language: highestLanguage ?? "Unknown",
+        color: LANGUAGES_COLORS[highestLanguage ?? "Unknown"],
+    }
+
+    console.log(LANGUAGES_COLORS)
+
+    return (
+        <div className="flex items-center">
+            <Circle className={"mr-1 h-3 w-3" + mostUsed.color} />
+            { mostUsed.language }
+        </div>
+    )
+}
+
+export function GitHubRepoCard({project} : {
+    project: Project
 }) {
 
     return (
         <Card>
             <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
                 <div className="space-y-1">
-                    <CardTitle>{title}</CardTitle>
+                    <CardTitle>{project.name}</CardTitle>
                     <CardDescription>
-                        {description}
+                        {project.description}
                     </CardDescription>
                 </div>
                 <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
-                    <Link href={link} target="_blank">
+                    <Link href={project.html_url} target="_blank">
                         <Button
                             variant="secondary"
                         >
@@ -54,15 +94,12 @@ export function GitHubRepoCard({title, description, stars,  updatedAt, link, ...
             </CardHeader>
             <CardContent>
                 <div className="flex space-x-4 text-sm text-muted-foreground">
-                    <div className="flex items-center">
-                        <Circle className="mr-1 h-3 w-3 fill-sky-400 text-sky-400" />
-                        TypeScript
-                    </div>
+                    { LanguageBadges(project) }
                     <div className="flex items-center">
                         <Star className="mr-1 h-3 w-3" />
-                        {stars}
+                        {project.stargazers_count}
                     </div>
-                    <div>{updatedAt}</div>
+                    <div>{project.updated_at}</div>
                 </div>
             </CardContent>
         </Card>
