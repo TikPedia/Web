@@ -27,8 +27,9 @@ export default async function Home() {
     const projects = await fetch("http://127.0.0.1:3000/api/github").then(res => res.json())
 
     return (
+        <div className="relative flex min-h-screen flex-col">
         <div className="bg-[url('/bg.svg')]">
-            <div className=" backdrop-blur-[64px]">
+            <div className="container flex h-14 items-center backdrop-blur-[64px] flex-wrap">
                 <MainNav/>
                 <main className="container flex flex-wrap gap-8">
                     <div className={"flex flex-col self-center gap-4 basis-full"}>
@@ -100,5 +101,6 @@ export default async function Home() {
                 </main>
             </div>
         </div>
+            </div>
     )
 }
