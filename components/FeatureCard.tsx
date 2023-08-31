@@ -109,7 +109,8 @@ export default function Features() {
                 </h2>
             </div>
             <div className={"flex flex-row basis-full"}>
-                <p className={"text-lg xl:text-xl 2xl:text-2xl u-text-gray-500 sm:max-w-xl md:max-w-3xl lg:max-w-4xl"}>
+                <p className={"font-normal text-lg xl:text-xl 2xl:text-2xl u-text-gray-400 sm:max-w-xl md:max-w-3xl lg:max-w-4xl selectable"}
+                >
                     TikPedia anaylize current trends and create videos using AI. You can publish videos to TikTok and
                     YouTube.
                     You can also track your videos performance and customize your videos. TikPedia also provides
