@@ -1,3 +1,4 @@
+// @ts-ignore
 import Gradient from 'rgt';
 import { Button } from '@/components/ui/button';
 

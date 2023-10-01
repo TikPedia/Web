@@ -17,10 +17,12 @@ export default async function DashboardLayout({
 
   return (
     <div className='flex-col md:flex'>
-      <div className='flex border-b w-full'>
-        <div className='flex h-16 items-center px-4'>
-          <Nav />
+      <div className='flex border-b w-full flex-wrap'>
+        <div className='flex basis-full'>
           <UserNav />
+        </div>
+        <div className='flex basis-full'>
+          <Nav />
         </div>
       </div>
       <div className={'flex-1 space-y-4 p-8 pt-6'}>{children}</div>

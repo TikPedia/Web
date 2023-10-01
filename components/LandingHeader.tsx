@@ -1,5 +1,6 @@
 'use client';
 import Lottie from 'lottie-react';
+// @ts-ignore
 import Gradient from 'rgt';
 import server from '@/public/animations/test.json';
 
