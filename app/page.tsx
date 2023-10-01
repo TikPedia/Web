@@ -1,5 +1,4 @@
-export const dynamic = 'force-dynamic';
-
+import { get } from '@vercel/edge-config';
 // @ts-ignore
 import Gradient from 'rgt';
 import { Button } from '@/components/ui/button';
@@ -9,7 +8,6 @@ import { ModeToggle } from '@/components/ModeToggle';
 import { MainNav } from '@/components/main-nav';
 import Features from '@/components/FeatureCard';
 import { LandingHeader } from '@/components/LandingHeader';
-import './locomotive.css';
 
 interface Project {
   name: string;
@@ -25,9 +23,11 @@ interface Project {
 }
 
 export default async function Home() {
-  const projects = await fetch(process.env.APP_URL + '/api/github', {
-    next: { revalidate: 3600 },
-  }).then((res) => res.json());
+  const data = await get('projects');
+
+  console.log(data);
+  // @ts-ignore
+  const projects: Project[] = data === undefined ? [] : data;
 
   return (
     <div className='relative flex min-h-screen flex-col'>

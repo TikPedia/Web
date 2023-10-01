@@ -40,7 +40,7 @@ export function UserNav() {
     <nav className={'flex w-full justify-between'}>
       <div className={'flex'}>
         <Link href={'/dashboard'}>
-          <Image src='/logo.png' alt='logo' className='h-8 w-8' />
+          <Image src='/logo.png' alt='logo' width={32} height={32} />
         </Link>
         <svg
           data-testid='geist-icon'
