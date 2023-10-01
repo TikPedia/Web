@@ -25,13 +25,9 @@ interface Project {
 }
 
 export default async function Home() {
-  const projects = await fetch('http://127.0.0.1:3000/api/github').then((res) =>
-    res.json()
-  );
-
-  // 00ded8
-  // f6a4df
-  // 0080ef
+  const projects = await fetch(process.env.APP_URL + '/api/github', {
+    next: { revalidate: 3600 },
+  }).then((res) => res.json());
 
   return (
     <div className='relative flex min-h-screen flex-col'>
