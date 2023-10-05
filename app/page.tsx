@@ -23,7 +23,7 @@ interface Project {
 }
 
 export default async function Home() {
-  const data = await get('projects');
+  const data: Project[] | undefined = []
 
   console.log(data);
   // @ts-ignore
