@@ -17,9 +17,9 @@ const user_service_1 = require("../user/user.service");
 let GoogleStrategy = class GoogleStrategy extends (0, passport_1.PassportStrategy)(passport_google_oauth20_1.Strategy, 'google') {
     constructor(userService) {
         super({
-            clientID: "test",
-            clientSecret: "secrettest",
-            callbackURL: 'http://localhost:3000/auth/google/callback',
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            callbackURL: 'http://localhost:3001/auth/google/callback',
             scope: ['email', 'profile'],
         });
         this.userService = userService;
