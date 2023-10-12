@@ -1,0 +1,20 @@
+1. Install NestJS:
+npm i -g @nestjs/cli
+
+2. Create a new projet
+nest new backend-tikpedia
+
+3. go at the project's root
+cd /backend-tikpedia
+
+4. install depencies
+For database (typeorm and postgres):
+npm install @nestjs/typeorm typeorm pg
+
+For oAuth2 (passport) (passport-google-oauth20):
+npm install @nestjs/passport passport passport-google-oauth20
+
+5. Create an authentification module:
+nest generate module auth
+
+
