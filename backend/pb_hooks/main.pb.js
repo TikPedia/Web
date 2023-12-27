@@ -7,21 +7,12 @@ routerAdd(
     console.log("Downloading user's data");
     console.log(JSON.stringify(c.get('authRecord')));
 
-    const record = $app.dao().findRecordById('articles', 'RECORD_ID');
-  },
-  $apis.requireRecordAuth('users')
-);
+    const record = $app.dao().findRecordById('users', c.get('authRecord').id);
 
-routerAdd(
-  'GET',
-  '/gdpr/delete_account',
-  (c) => {
-    console.log("Deleting user's account");
-    console.log(JSON.stringify(c.get('authRecord')));
+    const userDataText = JSON.stringify(record);
+    const userDataBlob = new Blob([userDataText], { type: 'text/plain' });
 
-    const record = $app.dao().findRecordById('articles', 'RECORD_ID');
-
-    $app.dao().deleteRecord(record);
+    const file = new File([userDataBlob], 'user_data.txt');
   },
   $apis.requireRecordAuth('users')
 );

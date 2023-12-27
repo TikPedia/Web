@@ -15,9 +15,22 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import pb from '@/lib/pocketbase';
 import { useToast } from '@/components/ui/use-toast';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { useRouter } from 'next/navigation';
 
 export default function ProfilePage() {
   const { user } = usePbAuth();
+  const router = useRouter();
   const { toast } = useToast();
 
   const handleUploadPictureClick = () => {
@@ -59,6 +72,31 @@ export default function ProfilePage() {
   };
 
   const handleGoogleSecretsUpload = async (e: any) => {};
+
+  const handleDeleteAccount = async () => {
+    const targetUser = pb.authStore.model as PbUser;
+
+    try {
+      const deletedUser = await pb.collection('users').delete(targetUser.id);
+      if (deletedUser) {
+        toast({
+          title: 'Account deleted',
+          description: 'Your account has been deleted.',
+        });
+
+        pb.authStore.clear();
+        router.push('/');
+      }
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: 'Error',
+        description: 'There was an error deleting your account.',
+      });
+    }
+  };
+
+  const handleDownloadData = async () => {};
 
   if (!user) {
     return (
@@ -187,7 +225,26 @@ export default function ProfilePage() {
           </CardHeader>
           <Separator className='bg-[#671e21]' />
           <CardFooter className={'flex justify-end bg-[#2a1314] p-4'}>
-            <Button variant='destructive'>Delete Account</Button>
+            <AlertDialog>
+              <AlertDialogTrigger>
+                <Button variant='destructive'>Delete Account</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    your account and remove your data from our servers.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleDeleteAccount}>
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </CardFooter>
         </Card>
       </div>
