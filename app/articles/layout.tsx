@@ -1,6 +1,5 @@
 import { Nav } from '@/components/nav';
 import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
 import { UserNav } from '@/components/user-nav';
 
 export default async function DashboardLayout({

@@ -17,11 +17,18 @@ export function MainNav({
         <Image src={'/logo.png'} alt={'logo'} width={32} height={32} />
         <span className='font-bold text-2xl'>TikPedia</span>
       </Link>
-      <Button asChild>
-        <Link href='/login' className='flex items-center'>
-          Start Now
-        </Link>
-      </Button>
+      <div className={'flex gap-4'}>
+        <Button asChild variant={'secondary'}>
+          <Link href='/signin' className='flex items-center'>
+            Login
+          </Link>
+        </Button>
+        <Button asChild>
+          <Link href='/signup' className='flex items-center'>
+            Start Now
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { Nav } from '@/components/nav';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { UserNav } from '@/components/user-nav';
+import { Toaster } from '@/components/ui/toaster';
 
 export default async function DashboardLayout({
   children,
@@ -17,6 +18,7 @@ export default async function DashboardLayout({
 
   return (
     <div className='flex-col md:flex'>
+      <Toaster />
       <div className='flex border-b w-full flex-wrap'>
         <div className='flex basis-full'>
           <UserNav />
@@ -25,7 +27,7 @@ export default async function DashboardLayout({
           <Nav />
         </div>
       </div>
-      <div className={'flex-1 space-y-4 p-8 pt-6'}>{children}</div>
+      <div className={'flex-1'}>{children}</div>
     </div>
   );
 }

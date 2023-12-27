@@ -9,18 +9,12 @@ import { Loader2 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { ToastAction } from '@/components/ui/toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@/components/ui/hover-card';
 import { ModelSelector } from '@/components/model-selector';
 import { TemperatureSelector } from '@/components/temperature-selector';
 import { MaxLengthSelector } from '@/components/maxlength-selector';
 import { TopPSelector } from '@/components/top-p-selector';
 import { CounterClockwiseClockIcon } from '@radix-ui/react-icons';
 import { Label } from '@/components/label';
-import { CodeViewer } from '@/app/articles/new/code-viewer';
 
 const types = ['GPT-3'] as const;
 

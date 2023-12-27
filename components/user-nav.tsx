@@ -15,26 +15,14 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import pb from '@/lib/pocketbase';
+import { PbUser, usePbAuth } from '@/app/providers';
+import { useEffect, useState } from 'react';
 
 export function UserNav() {
-  let { data: session, status } = useSession();
-
-  if (status === 'loading') {
-    return (
-      <div className='flex items-center space-x-2'>
-        <div className='h-8 w-8 rounded-full bg-gray-200 animate-pulse' />
-      </div>
-    );
-  }
-
-  // if (!session) {
-  //   return (
-  //     <div className='flex items-center space-x-2'>
-  //       <Button variant='ghost'>Sign in</Button>
-  //     </div>
-  //   );
-  // }
+  const router = useRouter();
+  const { user } = usePbAuth();
 
   return (
     <nav className={'flex w-full justify-between'}>
@@ -61,11 +49,11 @@ export function UserNav() {
         <div className={'flex-col'}>
           <Avatar className='h-4 w-4'>
             <AvatarImage
-              src={'https://avatars.githubusercontent.com/u/25646890?v=4'}
-              alt={'@DorianHardy'}
+              src={user?.avatarUrl || ''}
+              alt={user?.name || '@User'}
             />
           </Avatar>
-          <p>thegostisdead</p>
+          <p>{user?.email}</p>
         </div>
       </div>
 
@@ -83,11 +71,11 @@ export function UserNav() {
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant='ghost' className='relative h-8 w-8 rounded-full'>
-              <Avatar className='h-8 w-8'>
+            <Button variant='ghost' className='relative h-12 w-12 rounded-full'>
+              <Avatar className='h-12 w-12'>
                 <AvatarImage
-                  src={'https://avatars.githubusercontent.com/u/25646890?v=4'}
-                  alt={'@DorianHardy'}
+                  src={user?.avatarUrl || ''}
+                  alt={user?.username || '@User'}
                 />
                 <AvatarFallback>SC</AvatarFallback>
               </Avatar>
@@ -96,17 +84,17 @@ export function UserNav() {
           <DropdownMenuContent className='w-56' align='end' forceMount>
             <DropdownMenuLabel className='font-normal'>
               <div className='flex flex-col space-y-1'>
-                <p className='text-sm font-medium leading-none'>
-                  {'Dorian Hardy'}
-                </p>
+                <p className='text-sm font-medium leading-none'>{user?.name}</p>
                 <p className='text-xs leading-none text-muted-foreground'>
-                  {'thegostisdead@gmail.com'}
+                  {user?.email}
                 </p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={(e) => router.push('/dashboard/profile')}
+              >
                 <User className='mr-2 h-4 w-4' />
                 <span>Profile</span>
                 <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
@@ -118,7 +106,7 @@ export function UserNav() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={(e) => router.push('/logout')}>
               <LogOut className='mr-2 h-4 w-4' />
               <span>Log out</span>
               <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

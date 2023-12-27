@@ -1,42 +1,29 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PlusCircledIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/new-york/button';
-import { DataTable } from '@/app/articles/data-table';
-import { Article, columns } from '@/app/articles/columns';
 import Link from 'next/link';
 
+interface Article {
+  id: number;
+  title: string;
+  text: string;
+  date: string;
+  status: 'approved' | 'rejected' | 'pending';
+}
+
 export default function TrendsPage() {
-  const [articles, setArticles] = React.useState<Article[]>([
-    {
-      id: 1,
-      title: 'Article 1',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies aliquam, nunc sapien aliquet urna, vitae aliqu',
-      date: '2021-01-01',
-      status: 'approved',
-    },
-    {
-      id: 2,
-      title: 'Article 2',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies aliquam, nunc sapien aliquet urna, vitae aliqu',
-      date: '2021-01-02',
-      status: 'rejected',
-    },
-    {
-      id: 3,
-      title: 'Article 3',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies aliquam, nunc sapien aliquet urna, vitae aliqu',
-      date: '2021-01-03',
-      status: 'pending',
-    },
-    {
-      id: 4,
-      title: 'Article 4',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies aliquam, nunc sapien aliquet urna, vitae aliqu',
-      date: '2021-01-04',
-      status: 'approved',
-    },
-  ]);
+  const [articles, setArticles] = React.useState<Article[]>([]);
+
+  async function getArticles() {
+    const res = await fetch('http://localhost:3000/api/articles');
+    const data = await res.json();
+    setArticles(data);
+  }
+
+  useEffect(() => {
+    getArticles();
+  }, []);
 
   return (
     <div className={'flex-col flex-wrap'}>
@@ -51,7 +38,21 @@ export default function TrendsPage() {
         </Button>
       </div>
 
-      <DataTable data={articles} columns={columns} />
+      <div className={'flex flex-wrap'}>
+        {articles.map((article) => (
+          <div
+            key={article.id}
+            className={
+              'flex flex-col border rounded-lg p-4 m-4 w-96 max-w-full'
+            }
+          >
+            <h3 className='text-xl font-semibold'>{article.title}</h3>
+            <p className='text-gray-500'>{article.text}</p>
+            <p className='text-gray-500'>{article.date}</p>
+            <p className='text-gray-500'>{article.status}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

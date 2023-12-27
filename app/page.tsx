@@ -23,11 +23,11 @@ interface Project {
 }
 
 export default async function Home() {
-  const data = await get('projects');
+  // const data = await get('projects');
 
-  console.log(data);
+  // console.log(data);
   // @ts-ignore
-  const projects: Project[] = data === undefined ? [] : data;
+  const projects: Project[] = [];
 
   return (
     <div className='relative flex min-h-screen flex-col'>
