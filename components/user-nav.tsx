@@ -64,14 +64,11 @@ export function UserNav() {
 
       <div className={'flex'}>
         <div className={'flex items-center gap-4'}>
-          <Link href={''} className={'font-medium text-muted-foreground'}>
-            qsdsqd5
+          <Link href={'/docs'} className={'font-medium text-muted-foreground'}>
+            Docs
           </Link>
-          <Link href={''} className={'font-medium text-muted-foreground'}>
-            qsdsqd
-          </Link>
-          <Link href={''} className={'font-medium text-muted-foreground'}>
-            sqdsqd
+          <Link href={'/help'} className={'font-medium text-muted-foreground'}>
+            Help
           </Link>
         </div>
         <DropdownMenu>
