@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-
+import { Icons } from '@/components/icons';
 import { LogOut, Settings, User } from 'lucide-react';
 import {
   DropdownMenu,
@@ -16,51 +16,56 @@ import {
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useRouter } from 'next/navigation';
-import pb from '@/lib/pocketbase';
-import { PbUser, usePbAuth } from '@/app/providers';
-import { useEffect, useState } from 'react';
+
+import { usePbAuth } from '@/app/providers';
 
 export function UserNav() {
   const router = useRouter();
   const { user } = usePbAuth();
 
+  if (!user) {
+    return (
+      <nav className={'flex w-full justify-between'}>
+        <div className={'flex items-center gap-2 pl-4'}>
+          <Link href={'/dashboard'}>
+            <Image src='/logo.png' alt='logo' width={42} height={42} />
+          </Link>
+        </div>
+        <div className={'flex m-3 gap-4 items-center'}>
+          <Link href={'/legal/contact'}>Contact</Link>
+          <Link href={'/signin'}>
+            <Button variant='secondary'>Log in</Button>
+          </Link>
+          <Link href={'/signup'}>
+            <Button variant='default'>Sign Up</Button>
+          </Link>
+        </div>
+      </nav>
+    );
+  }
+
   return (
     <nav className={'flex w-full justify-between'}>
-      <div className={'flex'}>
+      <div className={'flex items-center gap-2 pl-4'}>
         <Link href={'/dashboard'}>
-          <Image src='/logo.png' alt='logo' width={32} height={32} />
+          <Image src='/logo.png' alt='logo' width={42} height={42} />
         </Link>
-        <svg
-          data-testid='geist-icon'
-          fill='none'
-          height='24'
-          shape-rendering='geometricPrecision'
-          stroke='currentColor'
-          stroke-linecap='round'
-          stroke-linejoin='round'
-          stroke-width='1'
-          viewBox='0 0 24 24'
-          width='24'
-          data-darkreader-inline-stroke=''
-          data-darkreader-inline-color=''
-        >
-          <path d='M16.88 3.549L7.12 20.451'></path>
-        </svg>
+        <Icons.separator />
         <div className={'flex-col'}>
-          <Avatar className='h-4 w-4'>
+          <Avatar className='h-6 w-6'>
             <AvatarImage
               src={user?.avatarUrl || ''}
               alt={user?.name || '@User'}
             />
           </Avatar>
-          <p>{user?.email}</p>
         </div>
+        <p>{user?.name}</p>
       </div>
 
       <div className={'flex'}>
-        <div>
+        <div className={'flex items-center gap-4'}>
           <Link href={''} className={'font-medium text-muted-foreground'}>
-            qsdsqd
+            qsdsqd5
           </Link>
           <Link href={''} className={'font-medium text-muted-foreground'}>
             qsdsqd
@@ -71,8 +76,11 @@ export function UserNav() {
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant='ghost' className='relative h-12 w-12 rounded-full'>
-              <Avatar className='h-12 w-12'>
+            <Button
+              variant='ghost'
+              className='relative m-2 h-12 w-12 rounded-full'
+            >
+              <Avatar className='h-[32px] w-[32px]'>
                 <AvatarImage
                   src={user?.avatarUrl || ''}
                   alt={user?.username || '@User'}

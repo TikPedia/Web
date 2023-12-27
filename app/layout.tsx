@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 import React from 'react';
 import AuthWrapper from '@/app/providers';
+import Footer from '@/components/footer';
 
 export const metadata = {
   title: 'TikPedia',
@@ -31,6 +32,7 @@ export default function RootLayout({
         <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
           <AuthWrapper>
             <div className='flex flex-col'>{children}</div>
+            <Footer />
           </AuthWrapper>
         </ThemeProvider>
       </body>

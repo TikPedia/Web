@@ -1,6 +1,4 @@
 import { Nav } from '@/components/nav';
-import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
 import { UserNav } from '@/components/user-nav';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -9,13 +7,6 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
-
-  if (!session) {
-    // redirect('/api/auth/signin');
-    // return <p>You must be signed in...</p>
-  }
-
   return (
     <div className='flex-col md:flex'>
       <Toaster />
