@@ -24,14 +24,11 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body
-        className={cn(
-          'min-h-screen bg-background font-sans antialiased',
-          inter
-        )}
+        className={cn('h-screen bg-background font-sans antialiased', inter)}
       >
         <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
           <AuthWrapper>
-            <div className='flex flex-col'>{children}</div>
+            <div className='flex  flex-col flex-grow'>{children}</div>
             <Footer />
           </AuthWrapper>
         </ThemeProvider>

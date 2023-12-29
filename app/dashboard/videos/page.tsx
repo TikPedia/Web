@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
-import { DataTable } from '@/app/videos/data-table';
-import { columns, Video } from '@/app/videos/columns';
+import { DataTable } from '@/app/dashboard/videos/data-table';
+import { columns, Video } from '@/app/dashboard/videos/columns';
 
 export default function TrendsPage() {
   const data: Video[] = [

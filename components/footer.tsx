@@ -15,15 +15,6 @@ export default function Footer() {
             >
               Vercel
             </a>
-            . The source code is available on{' '}
-            <a
-              href={'https://github.com/tikpedia'}
-              target='_blank'
-              rel='noreferrer'
-              className='font-medium underline underline-offset-4'
-            >
-              GitHub
-            </a>
             .
           </p>
         </div>

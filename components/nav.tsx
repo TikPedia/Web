@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ArrowRight } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
@@ -14,15 +13,15 @@ const examples = [
   },
   {
     name: 'Trends',
-    href: '/trends',
+    href: '/dashboard/trends',
   },
   {
     name: 'Articles',
-    href: '/articles',
+    href: '/dashboard/articles',
   },
   {
     name: 'Videos',
-    href: '/videos',
+    href: '/dashboard/videos',
   },
 ];
 
